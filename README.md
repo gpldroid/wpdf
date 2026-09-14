@@ -16,6 +16,10 @@ The application is being migrated incrementally from the original monolithic Jav
 
 The legacy `app.js` remains the authoritative runtime during this migration so existing UI behavior is not replaced before each operation has been audited and tested.
 
+## PDF module smoke test
+
+A browser-based smoke test is available at `tests/pdf-modules.html`. It creates small in-memory PDFs and verifies the extracted merge, split, delete-page, and reorder-page modules. The test does not modify production application state.
+
 ## Privacy
 
 The application is designed around client-side processing for the supported operations. Third-party libraries are currently loaded from CDNs and will be reviewed during development.
@@ -26,6 +30,7 @@ The application is designed around client-side processing for the supported oper
 - [x] Add project license and ignore rules.
 - [x] Separate CSS and JavaScript from `index.html`.
 - [x] Establish PDF module boundaries.
+- [x] Add browser smoke coverage for the extracted PDF modules.
 - [ ] Switch each PDF operation from the legacy runtime to the new modules.
 - [ ] Audit conversion fidelity and browser compatibility.
 - [ ] Improve mobile UX and accessibility.
