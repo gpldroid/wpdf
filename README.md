@@ -14,7 +14,9 @@ The `main` branch remains the current published version. The `develop` branch is
 
 The application is being migrated incrementally from the original monolithic JavaScript file into maintainable modules. The current development branch contains a PDF module boundary under `assets/js/pdf/` for core utilities, merge, split, editing, security, and conversion dependencies.
 
-The legacy `app.js` remains the authoritative runtime during this migration so existing UI behavior is not replaced before each operation has been audited and tested.
+The legacy `app.js` remains the authoritative runtime during this migration, while completed operations are switched over one at a time after their behavior is audited.
+
+The PDF merge operation is now wired to `assets/js/pdf/merge.js` and keeps the existing output filename and PDF object-stream behavior.
 
 ## PDF module smoke test
 
@@ -31,7 +33,8 @@ The application is designed around client-side processing for the supported oper
 - [x] Separate CSS and JavaScript from `index.html`.
 - [x] Establish PDF module boundaries.
 - [x] Add browser smoke coverage for the extracted PDF modules.
-- [ ] Switch each PDF operation from the legacy runtime to the new modules.
+- [x] Switch PDF merge from the legacy runtime to the new module.
+- [ ] Switch the remaining PDF operations from the legacy runtime to the new modules.
 - [ ] Audit conversion fidelity and browser compatibility.
 - [ ] Improve mobile UX and accessibility.
 - [ ] Improve SEO, metadata, and structured data.
