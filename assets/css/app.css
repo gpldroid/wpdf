@@ -12,8 +12,6 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { background:#f8fafc !important; color:#0f172a !important; line-height:1.7; }
-
-/* Never allow low-contrast utility colors to hide content. */
 .text-primary { color:#1d4ed8 !important; }
 .text-gray-300,.text-gray-400 { color:#475569 !important; }
 .text-gray-500 { color:#475569 !important; }
@@ -22,61 +20,40 @@ body { background:#f8fafc !important; color:#0f172a !important; line-height:1.7;
 .text-white { color:#ffffff !important; }
 .bg-primary { background:#1d4ed8 !important; color:#fff !important; }
 .border-primary { border-color:#1d4ed8 !important; }
-
-/* Header */
 header.glass { background:#ffffff !important; border-color:#cbd5e1 !important; box-shadow:0 2px 12px rgba(15,23,42,.08); }
 header a, header button { color:#0f172a !important; }
 header .text-primary { color:#1d4ed8 !important; }
-
-/* Hero */
 body > section.relative { background:#1d4ed8 !important; color:#fff !important; }
 body > section.relative * { text-shadow:none !important; }
-body > section.relative h1,
-body > section.relative h2,
-body > section.relative p,
-body > section.relative span { color:#fff !important; opacity:1 !important; }
+body > section.relative h1,body > section.relative h2,body > section.relative p,body > section.relative span { color:#fff !important; opacity:1 !important; }
 body > section.relative .bg-white { background:#fff !important; color:#1d4ed8 !important; }
-
-/* Filters */
 .filter-btn { background:#fff !important; color:#0f172a !important; border:2px solid #cbd5e1 !important; box-shadow:none !important; }
 .filter-btn:hover { background:#eff6ff !important; color:#1d4ed8 !important; border-color:#60a5fa !important; }
 .filter-btn.active { background:#1d4ed8 !important; color:#fff !important; border-color:#1d4ed8 !important; }
-
-/* Tool cards: force readable text and visible icons/buttons. */
 #toolsGrid > * { background:#fff !important; color:#0f172a !important; border:1px solid #cbd5e1 !important; border-radius:18px !important; box-shadow:0 5px 18px rgba(15,23,42,.08) !important; overflow:hidden; }
 #toolsGrid > * h1,#toolsGrid > * h2,#toolsGrid > * h3,#toolsGrid > * h4,#toolsGrid > * h5,#toolsGrid > * strong,#toolsGrid > * label { color:#0f172a !important; opacity:1 !important; }
 #toolsGrid > * p { color:#475569 !important; opacity:1 !important; }
 #toolsGrid > * span { color:#1e293b !important; opacity:1 !important; }
-#toolsGrid > * i,
-#toolsGrid > * svg { color:#1d4ed8 !important; fill:currentColor; opacity:1 !important; visibility:visible !important; }
+#toolsGrid > * i,#toolsGrid > * svg { color:#1d4ed8 !important; fill:currentColor; opacity:1 !important; visibility:visible !important; }
 #toolsGrid > * [class*="text-red-"],#toolsGrid > * [class*="text-orange-"],#toolsGrid > * [class*="text-yellow-"],#toolsGrid > * [class*="text-green-"] { color:#1d4ed8 !important; }
 #toolsGrid > * [class*="bg-red-"],#toolsGrid > * [class*="bg-orange-"],#toolsGrid > * [class*="bg-yellow-"],#toolsGrid > * [class*="bg-green-"] { background:#dbeafe !important; color:#1e40af !important; }
 #toolsGrid > * button { background:#1d4ed8 !important; color:#fff !important; border:1px solid #1d4ed8 !important; opacity:1 !important; text-shadow:none !important; }
 #toolsGrid > * button:hover { background:#1e40af !important; color:#fff !important; }
 #toolsGrid > * a[class*="bg-"] { background:#1d4ed8 !important; color:#fff !important; }
-
-/* Camera / Image to PDF */
 #scan-to-pdf > div { background:#fff !important; border:1px solid #bfdbfe !important; box-shadow:0 8px 24px rgba(15,23,42,.08) !important; }
 #scan-to-pdf h2,#scan-to-pdf h3 { color:#0f172a !important; }
 #scan-to-pdf p,#scan-to-pdf li { color:#334155 !important; }
 #scan-to-pdf i,#scan-to-pdf svg { color:#1d4ed8 !important; }
 #scan-to-pdf a,#scan-to-pdf button { background:#1d4ed8 !important; color:#fff !important; border-color:#1d4ed8 !important; }
 #scan-to-pdf a:hover,#scan-to-pdf button:hover { background:#1e40af !important; }
-
-/* Forms */
 input,textarea,select { background:#fff !important; color:#0f172a !important; border:1px solid #94a3b8 !important; opacity:1 !important; }
 input::placeholder,textarea::placeholder { color:#64748b !important; opacity:1 !important; }
 input:focus,textarea:focus,select:focus { border-color:#2563eb !important; box-shadow:0 0 0 3px rgba(37,99,235,.18) !important; outline:none !important; }
 button { text-shadow:none !important; }
 button:not([disabled]) { cursor:pointer; }
-
-/* Modals */
 #modalBox,#pageModalBox { background:#fff !important; color:#0f172a !important; }
-#modalBox h1,#modalBox h2,#modalBox h3,#modalBox h4,#modalBox p,#modalBox li,#modalBox label,
-#pageModalBox h1,#pageModalBox h2,#pageModalBox h3,#pageModalBox h4,#pageModalBox p,#pageModalBox li,#pageModalBox label { color:#0f172a !important; }
-
-/* IMPORTANT: the app currently starts in dark mode for new visitors. Force the default interface to remain readable/light. */
-html.dark body, body.dark { background:#f8fafc !important; color:#0f172a !important; }
+#modalBox h1,#modalBox h2,#modalBox h3,#modalBox h4,#modalBox p,#modalBox li,#modalBox label,#pageModalBox h1,#pageModalBox h2,#pageModalBox h3,#pageModalBox h4,#pageModalBox p,#pageModalBox li,#pageModalBox label { color:#0f172a !important; }
+html.dark body,body.dark { background:#f8fafc !important; color:#0f172a !important; }
 html.dark header.glass { background:#fff !important; border-color:#cbd5e1 !important; }
 html.dark header a,html.dark header button { color:#0f172a !important; }
 html.dark #toolsGrid > * { background:#fff !important; color:#0f172a !important; border-color:#cbd5e1 !important; box-shadow:0 5px 18px rgba(15,23,42,.08) !important; }
@@ -91,15 +68,10 @@ html.dark .filter-btn { background:#fff !important; color:#0f172a !important; bo
 html.dark .filter-btn.active { background:#1d4ed8 !important; color:#fff !important; }
 html.dark input,html.dark textarea,html.dark select { background:#fff !important; color:#0f172a !important; border-color:#94a3b8 !important; }
 html.dark #modalBox,html.dark #pageModalBox { background:#fff !important; color:#0f172a !important; }
-html.dark #modalBox h1,html.dark #modalBox h2,html.dark #modalBox h3,html.dark #modalBox h4,html.dark #modalBox p,html.dark #modalBox li,html.dark #modalBox label,
-html.dark #pageModalBox h1,html.dark #pageModalBox h2,html.dark #pageModalBox h3,html.dark #pageModalBox h4,html.dark #pageModalBox p,html.dark #pageModalBox li,html.dark #pageModalBox label { color:#0f172a !important; }
-
-/* Catch common Tailwind semantic colors that were too faint. */
 .text-red-400,.text-red-500,.text-red-600,.text-red-700,.text-red-800 { color:#1d4ed8 !important; }
 .bg-red-50,.bg-red-100,.bg-red-200 { background:#dbeafe !important; }
 .bg-red-500,.bg-red-600,.bg-red-700,.bg-red-800 { background:#1d4ed8 !important; color:#fff !important; }
 .border-red-200,.border-red-300,.border-red-400,.border-red-500 { border-color:#93c5fd !important; }
-
 ::-webkit-scrollbar { width:9px; height:9px; }
 ::-webkit-scrollbar-track { background:#e2e8f0; }
 ::-webkit-scrollbar-thumb { background:#94a3b8; border-radius:999px; }
@@ -113,9 +85,10 @@ html.dark #pageModalBox h1,html.dark #pageModalBox h2,html.dark #pageModalBox h3
 .modal-hidden #modalBox,.modal-hidden #pageModalBox { transform:scale(.95) translateY(10px); }
 .spinner { border:3px solid rgba(255,255,255,.3); border-radius:50%; border-top-color:#fff; width:20px; height:20px; animation:spin 1s ease-in-out infinite; }
 @keyframes spin { to { transform:rotate(360deg); } }
-@media (max-width:640px) {
-  #toolsGrid { gap:14px !important; }
-  #toolsGrid > * { border-radius:16px !important; }
-  body > section.relative .max-w-4xl { padding-top:64px !important; padding-bottom:64px !important; }
-  body > section.relative h1 { font-size:2.5rem !important; }
-}
+@media (max-width:640px) { #toolsGrid { gap:14px !important; } #toolsGrid > * { border-radius:16px !important; } body > section.relative .max-w-4xl { padding-top:64px !important; padding-bottom:64px !important; } body > section.relative h1 { font-size:2.5rem !important; } }
+
+/* Final UI policy: light mode only, no theme switch, no cookie-consent popup. */
+#themeBtn { display:none !important; }
+html,html.dark,body,body.dark { color-scheme:light !important; background:#f8fafc !important; color:#0f172a !important; }
+/* Hide cookie consent UI if an older cached script creates it. */
+#cookieBanner,#cookie-banner,#cookieConsent,#cookie-consent,.cookie-banner,.cookie-consent,.cookies-banner,.cookies-consent,[data-cookie-banner],[data-cookie-consent] { display:none !important; visibility:hidden !important; }
