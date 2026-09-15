@@ -1,0 +1,44 @@
+name: Validate WPDF
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Syntax check JavaScript modules
+        run: |
+          node --check assets/js/pdf/core.js
+          node --check assets/js/pdf/merge.js
+          node --check assets/js/pdf/split.js
+          node --check assets/js/pdf/edit.js
+          node --check assets/js/pdf/security.js
+          node --check assets/js/pdf/convert.js
+          node --check assets/js/pdf/numbers.js
+          node --check assets/js/pdf/images.js
+          node --check assets/js/pdf/convert-word.js
+          node --check assets/js/pdf/convert-excel.js
+          node --check assets/js/pdf/convert-ppt.js
+
+      - name: Verify required project files
+        run: |
+          test -f index.html
+          test -f assets/css/app.css
+          test -f assets/js/app.js
+          test -f manifest.webmanifest
+          test -f sw.js
+          test -f robots.txt
+          test -f sitemap.xml
+          test -f tests/pdf-modules.html
