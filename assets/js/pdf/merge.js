@@ -8,5 +8,5 @@ export async function merge(files) {
         const pages = await output.copyPages(source, source.getPageIndices());
         pages.forEach(page => output.addPage(page));
     }
-    return output.save();
+    return output.save({ useObjectStreams: true });
 }
