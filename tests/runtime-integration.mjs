@@ -26,3 +26,4 @@ const requiredModules = [
 for (const file of requiredModules) assert.ok(fs.existsSync(file), `${file} must exist`);
 
 console.log('Runtime integration wiring checks passed.');
+// Keep this check deterministic and dependency-free for CI.
