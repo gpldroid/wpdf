@@ -1,9 +1,10 @@
-const CACHE_NAME = 'wpdf-shell-v2';
+const CACHE_NAME = 'wpdf-shell-v3';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/assets/css/app.css',
   '/assets/js/app.js',
+  '/assets/js/analytics.js',
   '/assets/js/pdf/core.js',
   '/assets/js/pdf/index.js',
   '/assets/js/pdf/merge.js',
