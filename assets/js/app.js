@@ -477,48 +477,47 @@ const APP = {
         }
 
         async function processImages() {
-            const out = await PDFLib.PDFDocument.create();
-            for (const f of APP.files) {
-                const b = await getFileBuffer(f);
-                const img = f.type === 'image/png' ? await out.embedPng(b) : await out.embedJpg(b);
-                const dim = img.scale(1);
-                const page = out.addPage([dim.width, dim.height]);
-                page.drawImage(img, { x: 0, y: 0, width: dim.width, height: dim.height });
-            }
-            provideDownload(await out.save({ useObjectStreams: true }), 'images_to_pdf.pdf');
-        }
+    const { imagesToPdf } = await import('./assets/js/pdf/images.js');
+    provideDownload(await imagesToPdf(APP.files), 'images_to_pdf.pdf');
+}
 
         async function processSplit() {
-            const p = await loadPdfDoc(APP.files[0]);
-            const nums = parseRange($('#toolInputVal').value, p.getPageCount());
-            if(!nums.length) throw new Error('Invalid page range');
-            const out = await PDFLib.PDFDocument.create();
-            const pages = await out.copyPages(p, nums);
-            pages.forEach(pg => out.addPage(pg));
-            provideDownload(await out.save({ useObjectStreams: true }), 'split.pdf');
-        }
+    const range = $('#toolInputVal').value;
+    const p = await loadPdfDoc(APP.files[0]);
+    const nums = parseRange(range, p.getPageCount());
+    if (!nums.length) throw new Error('Invalid page range');
+    const { extractPages } = await import('./assets/js/pdf/split.js');
+    provideDownload(await extractPages(APP.files[0], range), 'split.pdf');
+}
 
         async function processEdit(type) {
-            const p = await loadPdfDoc(APP.files[0]); const n = p.getPageCount(); let idx = [...Array(n).keys()];
-            if (type === 'delete') {
-                const del = parseRange($('#toolInputVal').value, n); idx = idx.filter(i => !del.includes(i));
-                if(!idx.length) throw new Error('Cannot delete all pages');
-            } else if (type === 'reorder') {
-                const r = parseRange($('#toolInputVal').value, n); if (r.length > 0) idx = r; 
-            }
-            const out = await PDFLib.PDFDocument.create();
-            const pages = await out.copyPages(p, idx);
-            pages.forEach(pg => out.addPage(pg));
-            if (type === 'numbers') {
-                const pos = $('#toolInputVal').value;
-                out.getPages().forEach((pg, i) => {
-                    const { width, height } = pg.getSize(); let x = width / 2;
-                    if (pos === 'bottom-right') x = width - 35; if (pos === 'bottom-left') x = 35;
-                    pg.drawText(String(i + 1), { x: x - 5, y: 20, size: 12, color: PDFLib.rgb(0.2, 0.2, 0.2) });
-                });
-            }
-            provideDownload(await out.save({ useObjectStreams: true }), `${type}_result.pdf`);
-        }
+    if (type === 'delete') {
+        const p = await loadPdfDoc(APP.files[0]);
+        const del = parseRange($('#toolInputVal').value, p.getPageCount());
+        if (del.length >= p.getPageCount()) throw new Error('Cannot delete all pages');
+        const { deletePages } = await import('./assets/js/pdf/edit.js');
+        provideDownload(await deletePages(APP.files[0], del), 'delete_result.pdf');
+        return;
+    }
+    if (type === 'reorder') {
+        const p = await loadPdfDoc(APP.files[0]);
+        const r = parseRange($('#toolInputVal').value, p.getPageCount());
+        const order = r.length ? r : [...Array(p.getPageCount()).keys()];
+        const { reorderPages } = await import('./assets/js/pdf/edit.js');
+        provideDownload(await reorderPages(APP.files[0], order), 'reorder_result.pdf');
+        return;
+    }
+    if (type === 'numbers') {
+        const { addPageNumbers } = await import('./assets/js/pdf/numbers.js');
+        provideDownload(await addPageNumbers(APP.files[0], $('#toolInputVal').value), 'numbers_result.pdf');
+        return;
+    }
+    const p = await loadPdfDoc(APP.files[0]);
+    const out = await PDFLib.PDFDocument.create();
+    const pages = await out.copyPages(p, p.getPageIndices());
+    pages.forEach(pg => out.addPage(pg));
+    provideDownload(await out.save({ useObjectStreams: true }), `${type}_result.pdf`);
+}
 
         async function processProtect() {
             const pwd = $('#toolInputVal').value.trim(); if (!pwd) throw new Error(dict[APP.lang].errPassword);
