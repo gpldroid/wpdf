@@ -471,13 +471,9 @@ const APP = {
 
         // Tasks implementations
         async function processMerge() {
-            const out = await PDFLib.PDFDocument.create();
-            for (const f of APP.files) {
-                const p = await loadPdfDoc(f);
-                const pages = await out.copyPages(p, p.getPageIndices());
-                pages.forEach(pg => out.addPage(pg));
-            }
-            provideDownload(await out.save({ useObjectStreams: true }), 'merged.pdf');
+            const { merge } = await import('./assets/js/pdf/merge.js');
+            const bytes = await merge(APP.files);
+            provideDownload(bytes, 'merged.pdf');
         }
 
         async function processImages() {
