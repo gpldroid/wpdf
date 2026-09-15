@@ -31,12 +31,14 @@ jobs:
           node --check assets/js/pdf/convert-word.js
           node --check assets/js/pdf/convert-excel.js
           node --check assets/js/pdf/convert-ppt.js
+          node --check assets/js/pdf/runtime-migration.js
 
       - name: Verify required project files
         run: |
           test -f index.html
           test -f assets/css/app.css
           test -f assets/js/app.js
+          test -f assets/js/pdf/runtime-migration.js
           test -f manifest.webmanifest
           test -f sw.js
           test -f robots.txt
