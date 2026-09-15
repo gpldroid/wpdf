@@ -92,3 +92,5 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m 'chore: apply PDF runtime migration'
           git push
+
+# Runtime migration workflow is intentionally temporary and will be removed after validation.
