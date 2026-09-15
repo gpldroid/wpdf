@@ -1,20 +1,190 @@
-/* Custom scrollbar & utilities */
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        .dark ::-webkit-scrollbar-thumb { background: #475569; }
-        
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        
-        .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-        
-        /* Modal Animation */
-        #modal, #pageModal { transition: opacity 0.3s ease; }
-        #modalBox, #pageModalBox { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .modal-hidden { opacity: 0; pointer-events: none; }
-        .modal-hidden #modalBox, .modal-hidden #pageModalBox { transform: scale(0.95) translateY(10px); }
-        
-        /* Spinner */
-        .spinner { border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; width: 20px; height: 20px; animation: spin 1s ease-in-out infinite; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+/* World PDF — Professional visual system */
+:root {
+    --wpdf-primary: #2563eb;
+    --wpdf-primary-dark: #1d4ed8;
+    --wpdf-ink: #0f172a;
+    --wpdf-muted: #475569;
+    --wpdf-surface: #ffffff;
+    --wpdf-soft: #f8fafc;
+    --wpdf-border: #e2e8f0;
+    --wpdf-dark: #0f172a;
+    --wpdf-dark-surface: #172033;
+    --wpdf-dark-border: #334155;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    color: var(--wpdf-ink);
+    background: #f8fafc !important;
+    line-height: 1.7;
+}
+
+/* Replace the previous red-heavy palette with a consistent professional blue. */
+.text-primary { color: var(--wpdf-primary) !important; }
+.bg-primary { background-color: var(--wpdf-primary) !important; }
+.border-primary { border-color: var(--wpdf-primary) !important; }
+.hover\\:text-primary:hover { color: var(--wpdf-primary) !important; }
+.hover\\:bg-primary:hover { background-color: var(--wpdf-primary-dark) !important; }
+
+/* Header */
+header.glass {
+    background: rgba(255,255,255,.94) !important;
+    border-color: var(--wpdf-border) !important;
+    box-shadow: 0 1px 12px rgba(15,23,42,.06);
+}
+header a, header button { color: var(--wpdf-ink); }
+header .text-primary { color: var(--wpdf-primary) !important; }
+
+/* Hero: high contrast and calm blue gradient */
+body > section.relative {
+    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 52%, #0f766e 100%) !important;
+}
+body > section.relative .text-red-100 { color: #e0f2fe !important; }
+body > section.relative .bg-white { color: #1d4ed8 !important; }
+
+/* Category filters */
+.filter-btn {
+    color: #334155 !important;
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+.filter-btn:hover { color: var(--wpdf-primary) !important; border-color: #93c5fd !important; }
+.filter-btn.active {
+    background: var(--wpdf-primary) !important;
+    color: #ffffff !important;
+    border-color: var(--wpdf-primary) !important;
+}
+
+/* Tool cards — force readable text and visible surfaces */
+#toolsGrid > * {
+    background: #ffffff !important;
+    color: var(--wpdf-ink) !important;
+    border: 1px solid var(--wpdf-border) !important;
+    border-radius: 18px !important;
+    box-shadow: 0 8px 24px rgba(15,23,42,.07) !important;
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    overflow: hidden;
+}
+#toolsGrid > *:hover {
+    transform: translateY(-3px);
+    border-color: #bfdbfe !important;
+    box-shadow: 0 14px 34px rgba(37,99,235,.13) !important;
+}
+#toolsGrid > * h2,
+#toolsGrid > * h3,
+#toolsGrid > * h4,
+#toolsGrid > * p,
+#toolsGrid > * span,
+#toolsGrid > * label {
+    color: inherit;
+}
+#toolsGrid > * p { color: #64748b !important; }
+#toolsGrid > * .text-gray-500,
+#toolsGrid > * .text-gray-600,
+#toolsGrid > * .text-gray-700 { color: #475569 !important; }
+
+/* Scan section */
+#scan-to-pdf > div {
+    border-color: #bfdbfe !important;
+    background: linear-gradient(135deg,#eff6ff 0%,#ffffff 55%,#ecfeff 100%) !important;
+    box-shadow: 0 12px 35px rgba(15,23,42,.07) !important;
+}
+#scan-to-pdf .bg-red-100 { background: #dbeafe !important; }
+#scan-to-pdf .text-primary { color: var(--wpdf-primary) !important; }
+#scan-to-pdf .border-red-200 { border-color: #bfdbfe !important; }
+#scan-to-pdf .bg-primary { background: var(--wpdf-primary) !important; }
+
+/* Forms, inputs and modal surfaces */
+input, textarea, select {
+    color: var(--wpdf-ink) !important;
+    background: #ffffff !important;
+    border-color: #cbd5e1 !important;
+}
+input::placeholder, textarea::placeholder { color: #94a3b8 !important; }
+input:focus, textarea:focus, select:focus {
+    border-color: #60a5fa !important;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.12) !important;
+    outline: none !important;
+}
+
+/* Links and content */
+a { text-underline-offset: 3px; }
+main, main p, main h2, main h3 { color: var(--wpdf-ink); }
+
+/* Dark mode remains available, but with a single coherent palette. */
+.dark body, body.dark {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+}
+.dark header.glass {
+    background: rgba(15,23,42,.96) !important;
+    border-color: var(--wpdf-dark-border) !important;
+}
+.dark header a, .dark header button { color: #f8fafc; }
+.dark .filter-btn {
+    background: #172033 !important;
+    color: #e2e8f0 !important;
+    border-color: #334155 !important;
+}
+.dark .filter-btn.active {
+    background: var(--wpdf-primary) !important;
+    color: #ffffff !important;
+    border-color: var(--wpdf-primary) !important;
+}
+.dark #toolsGrid > * {
+    background: #172033 !important;
+    color: #f8fafc !important;
+    border-color: #334155 !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,.22) !important;
+}
+.dark #toolsGrid > * p,
+.dark #toolsGrid > * .text-gray-500,
+.dark #toolsGrid > * .text-gray-600,
+.dark #toolsGrid > * .text-gray-700 { color: #cbd5e1 !important; }
+.dark #scan-to-pdf > div {
+    background: linear-gradient(135deg,#172554 0%,#172033 60%,#134e4a 100%) !important;
+    border-color: #334155 !important;
+}
+.dark input, .dark textarea, .dark select {
+    color: #f8fafc !important;
+    background: #172033 !important;
+    border-color: #475569 !important;
+}
+.dark main, .dark main p, .dark main h2, .dark main h3 { color: #f8fafc; }
+
+/* Better visibility for utility text */
+.text-gray-400 { color: #64748b !important; }
+.text-gray-500 { color: #475569 !important; }
+.dark .text-gray-400 { color: #94a3b8 !important; }
+.dark .text-gray-500 { color: #cbd5e1 !important; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 9px; height: 9px; }
+::-webkit-scrollbar-track { background: #e2e8f0; }
+::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #64748b; }
+.dark ::-webkit-scrollbar-track { background: #0f172a; }
+.dark ::-webkit-scrollbar-thumb { background: #475569; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+
+.glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+/* Modal Animation */
+#modal, #pageModal { transition: opacity .3s ease; }
+#modalBox, #pageModalBox { transition: transform .3s cubic-bezier(.4,0,.2,1); }
+.modal-hidden { opacity: 0; pointer-events: none; }
+.modal-hidden #modalBox, .modal-hidden #pageModalBox { transform: scale(.95) translateY(10px); }
+
+/* Spinner */
+.spinner { border: 3px solid rgba(255,255,255,.3); border-radius: 50%; border-top-color: #fff; width: 20px; height: 20px; animation: spin 1s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Mobile readability */
+@media (max-width: 640px) {
+    #toolsGrid { gap: 14px !important; }
+    #toolsGrid > * { border-radius: 16px !important; }
+    body > section.relative .max-w-4xl { padding-top: 64px !important; padding-bottom: 64px !important; }
+    body > section.relative h1 { font-size: 2.5rem !important; }
+}
