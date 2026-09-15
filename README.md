@@ -24,7 +24,7 @@ The PDF runtime is organized into focused modules under `assets/js/pdf/`:
 - conversion-library boundaries for Word, Excel, and PowerPoint workflows
 - dedicated conversion implementations for the existing browser libraries
 
-The production runtime in `assets/js/app.js` now uses the extracted modules for merge, image-to-PDF, split/extract, page deletion, page reordering, and page numbering. Compression, security/protection, and the remaining document-conversion flows stay on their existing implementations until their browser fidelity is audited.
+The production runtime in `assets/js/app.js` uses the extracted modules for merge, image-to-PDF, split/extract, page deletion, page reordering, and page numbering. A dedicated `pdf-editor.html` provides camera capture, image/PDF import, annotation, and local PDF export. Compression, security/protection, and the remaining document-conversion flows stay on their existing implementations until their browser fidelity is audited.
 
 ## Testing
 
@@ -62,7 +62,7 @@ The application is designed around client-side processing for supported operatio
 - [x] Switch PDF merge from the legacy runtime to the new module.
 - [x] Switch remaining core PDF organization operations from the legacy runtime to tested modules.
 - [ ] Audit conversion fidelity and browser compatibility on real browsers/devices.
-- [ ] Wire PWA registration and add production application icons.
+- [x] Add a camera/image-to-PDF editing workflow.
 - [ ] Complete mobile UX/accessibility audit.
 - [ ] Replace remaining monolithic UI/processing paths with tested modules.
 - [ ] Reduce unnecessary external dependencies where practical.
