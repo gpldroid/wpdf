@@ -21,6 +21,8 @@
     import { merge } from '../assets/js/pdf/merge.js';
     import { extractPages, splitEachPage } from '../assets/js/pdf/split.js';
     import { deletePages, reorderPages } from '../assets/js/pdf/edit.js';
+    import { addPageNumbers } from '../assets/js/pdf/numbers.js';
+    import { imagesToPdf } from '../assets/js/pdf/images.js';
 
     const status = document.getElementById('status');
     const lines = [];
@@ -71,6 +73,22 @@
       const reorderedDoc = await PDFLib.PDFDocument.load(reordered);
       if (reorderedDoc.getPageCount() !== 2) throw new Error('Reorder should preserve 2 pages.');
       pass('edit: reorders pages');
+
+      const numbered = await addPageNumbers(first, 'bottom-center');
+      const numberedDoc = await PDFLib.PDFDocument.load(numbered);
+      if (numberedDoc.getPageCount() !== 2) throw new Error('Numbering should preserve 2 pages.');
+      pass('numbers: adds page numbers without changing page count');
+
+      const png = new File([new Uint8Array([
+        137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,
+        0,0,0,1,0,0,0,1,8,6,0,0,0,31,21,196,137,
+        0,0,0,13,73,68,65,84,120,156,99,248,207,192,240,31,
+        0,3,3,1,0,24,221,141,24,0,0,0,0,73,69,78,68,174,66,96,130
+      ])], 'pixel.png', { type: 'image/png' });
+      const imagePdf = await imagesToPdf([png]);
+      const imageDoc = await PDFLib.PDFDocument.load(imagePdf);
+      if (imageDoc.getPageCount() !== 1) throw new Error('Image conversion should create 1 page.');
+      pass('images: converts a PNG into one PDF page');
 
       lines.push('');
       lines.push('All PDF module smoke tests passed.');
