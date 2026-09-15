@@ -1,18 +1,22 @@
 # Cloudflare setup — WPDF
 
-## 1. Create the D1 database
+## 1. Production D1 database
 
-```bash
-npx wrangler d1 create wpdf-db
-```
+Database name: `wpdf-production`
 
-Copy the returned `database_id` into `wrangler.toml` in place of `REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID`.
+Database ID: `09339c53-6f74-4d35-b9f4-04e7cfd19246`
+
+The production D1 binding is configured in `wrangler.toml` as `DB`. fileciteturn209file0
 
 ## 2. Initialize the schema
 
+From the repository root, run:
+
 ```bash
-npx wrangler d1 execute wpdf-db --remote --file=./schema.sql
+npx wrangler d1 execute wpdf-production --remote --file=./schema.sql
 ```
+
+The schema creates the application settings and visit analytics tables and seeds the owner as `عماد الدين لمراني`. fileciteturn210file0
 
 ## 3. Deploy to Cloudflare Pages
 
