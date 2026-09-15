@@ -1,10 +1,13 @@
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Permissions-Policy: camera=(self), microphone=(), geolocation=()
 
 /assets/js/*
   Cache-Control: public, max-age=31536000, immutable
 
 /assets/css/*
   Cache-Control: public, max-age=31536000, immutable
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
