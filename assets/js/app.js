@@ -148,6 +148,8 @@ const APP = {
         };
 
         const toolsData = [
+            { id: 'scan', cat: 'toPDF', icon: 'fa-camera', color: 'red', accept: 'image/*,application/pdf,.pdf,.jpg,.jpeg,.png,.webp', multi: true, actionBtn: 'btnActionConvert', type: 'scan',
+              ar: { t: 'مسح بالكاميرا وصور إلى PDF', d: 'التقاط مستند بالكاميرا أو رفع صور وتعديلها ثم حفظها كـ PDF' }, en: { t: 'Scan / Images to PDF', d: 'Capture with your camera or upload images, edit and save as PDF' } },
             { id: 'merge', cat: 'organize', icon: 'fa-layer-group', color: 'purple', accept: 'application/pdf,.pdf', multi: true, actionBtn: 'btnActionMerge',
               ar: { t: 'دمج PDF', d: 'دمج عدة ملفات في ملف واحد' }, en: { t: 'Merge PDF', d: 'Combine multiple files into one' } },
             { id: 'split', cat: 'organize', icon: 'fa-scissors', color: 'purple', accept: 'application/pdf,.pdf', multi: false, actionBtn: 'btnActionExecute',
@@ -321,6 +323,7 @@ const APP = {
         const dropzone = $('#dropzone');
 
         function openTool(toolId) {
+            if (toolId === 'scan') { window.location.href = 'pdf-editor.html'; return; }
             APP.currentTool = toolId;
             APP.files = [];
             const tool = toolsData.find(t => t.id === toolId);
