@@ -4,17 +4,15 @@ WPDF is a browser-based PDF tools application focused on client-side file proces
 
 ## Current application
 
-The current production application is implemented in `index.html` and provides PDF organization, optimization, conversion, and security tools.
+The application is implemented in `index.html` with runtime logic in `assets/js/app.js` and modular PDF operations under `assets/js/pdf/`.
 
 ## Development
 
-The `main` branch remains the current published version. The `develop` branch is used for modernization and restructuring work.
+The `main` branch is the published version. The `develop` branch was used to complete the modernization and restructuring work before promotion to `main`.
 
-## Architecture migration
+## Architecture
 
-The application is being migrated incrementally from the original monolithic JavaScript file into maintainable modules under `assets/js/pdf/`.
-
-The extracted module layer now covers:
+The PDF runtime is organized into focused modules under `assets/js/pdf/`:
 
 - core PDF loading, byte handling, downloads, and page-range parsing
 - PDF merge
@@ -26,24 +24,24 @@ The extracted module layer now covers:
 - conversion-library boundaries for Word, Excel, and PowerPoint workflows
 - dedicated conversion implementations for the existing browser libraries
 
-The legacy `app.js` remains the authoritative runtime during this migration. The merge operation is already switched to the new module; the remaining runtime switches are intentionally kept separate from the module extraction so each browser-facing change can be audited without destabilizing the published application.
+The production runtime in `assets/js/app.js` now uses the extracted modules for merge, image-to-PDF, split/extract, page deletion, page reordering, and page numbering. Compression, security/protection, and the remaining document-conversion flows stay on their existing implementations until their browser fidelity is audited.
 
-## PDF module smoke test
+## Testing
 
 A browser-based smoke test is available at `tests/pdf-modules.html`. It creates in-memory PDFs and verifies merge, split, delete, reorder, page numbering, and image-to-PDF behavior without modifying production application state.
 
-The repository also includes a GitHub Actions validation workflow that checks JavaScript module syntax and required project files on `main`, `develop`, and pull requests.
+The repository also includes a GitHub Actions validation workflow that checks JavaScript syntax, runtime module wiring, required project files, and pull requests targeting `main` or `develop`.
 
 ## SEO and PWA foundation
 
-The development branch now includes:
+The project includes:
 
 - `robots.txt`
 - `sitemap.xml`
 - `manifest.webmanifest`
 - `sw.js` offline application-shell foundation
 
-The service worker is prepared as a separate deployment asset; activation should be completed only after the manifest is linked and registration is wired into the browser runtime.
+The service worker remains a deployment foundation; registration and production icon work are intentionally separate follow-up tasks.
 
 ## Privacy and dependency policy
 
@@ -62,7 +60,7 @@ The application is designed around client-side processing for supported operatio
 - [x] Add SEO crawling assets (`robots.txt` and `sitemap.xml`).
 - [x] Add PWA manifest and service-worker foundation.
 - [x] Switch PDF merge from the legacy runtime to the new module.
-- [ ] Switch the remaining PDF operations from the legacy runtime to the new modules.
+- [x] Switch remaining core PDF organization operations from the legacy runtime to tested modules.
 - [ ] Audit conversion fidelity and browser compatibility on real browsers/devices.
 - [ ] Wire PWA registration and add production application icons.
 - [ ] Complete mobile UX/accessibility audit.
