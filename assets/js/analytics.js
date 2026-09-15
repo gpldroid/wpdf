@@ -13,7 +13,6 @@
     } catch (_) {}
   };
 
-  const path = `${location.pathname}${location.hash}`.slice(0, 500);
   post('/api/visit', { path: location.pathname.slice(0, 500) });
 
   const clean = value => String(value || '').replace(/\s+/g, ' ').trim().slice(0, 160);
@@ -23,7 +22,10 @@
     const key = `${tool}:${location.pathname}`;
     if (sent.has(key)) return;
     sent.add(key);
-    post('/api/tool-usage', { tool });
+    post('/api/tool-usage', {
+      tool,
+      path: location.pathname.slice(0, 500)
+    });
   };
 
   document.addEventListener('click', event => {
