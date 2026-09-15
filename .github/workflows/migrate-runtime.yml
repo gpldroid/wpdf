@@ -1,0 +1,94 @@
+name: Migrate PDF Runtime
+
+on:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: write
+
+jobs:
+  migrate:
+    if: github.event.head_commit.message != 'chore: apply PDF runtime migration'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Apply runtime module wiring
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          path = Path('assets/js/app.js')
+          text = path.read_text(encoding='utf-8')
+
+          def replace_function(source, name, next_name, body):
+              pattern = rf'        async function {name}\(.*?\n        async function {next_name}\('
+              replacement = body.rstrip() + f'\n\n        async function {next_name}('
+              updated, count = re.subn(pattern, replacement, source, count=1, flags=re.S)
+              if count != 1:
+                  raise SystemExit(f'Could not replace {name}')
+              return updated
+
+          images = '''        async function processImages() {
+              const { imagesToPdf } = await import('./assets/js/pdf/images.js');
+              provideDownload(await imagesToPdf(APP.files), 'images_to_pdf.pdf');
+          }'''
+          text = replace_function(text, 'processImages', 'processSplit', images)
+
+          split = '''        async function processSplit() {
+              const range = $('#toolInputVal').value;
+              const p = await loadPdfDoc(APP.files[0]);
+              const nums = parseRange(range, p.getPageCount());
+              if (!nums.length) throw new Error('Invalid page range');
+              const { extractPages } = await import('./assets/js/pdf/split.js');
+              provideDownload(await extractPages(APP.files[0], range), 'split.pdf');
+          }'''
+          text = replace_function(text, 'processSplit', 'processEdit', split)
+
+          edit = '''        async function processEdit(type) {
+              if (type === 'delete') {
+                  const p = await loadPdfDoc(APP.files[0]);
+                  const del = parseRange($('#toolInputVal').value, p.getPageCount());
+                  if (del.length >= p.getPageCount()) throw new Error('Cannot delete all pages');
+                  const { deletePages } = await import('./assets/js/pdf/edit.js');
+                  provideDownload(await deletePages(APP.files[0], del), 'delete_result.pdf');
+                  return;
+              }
+              if (type === 'reorder') {
+                  const p = await loadPdfDoc(APP.files[0]);
+                  const r = parseRange($('#toolInputVal').value, p.getPageCount());
+                  const order = r.length ? r : [...Array(p.getPageCount()).keys()];
+                  const { reorderPages } = await import('./assets/js/pdf/edit.js');
+                  provideDownload(await reorderPages(APP.files[0], order), 'reorder_result.pdf');
+                  return;
+              }
+              if (type === 'numbers') {
+                  const { addPageNumbers } = await import('./assets/js/pdf/numbers.js');
+                  provideDownload(await addPageNumbers(APP.files[0], $('#toolInputVal').value), 'numbers_result.pdf');
+                  return;
+              }
+              // Compression remains on the legacy path until its fidelity is audited.
+              const p = await loadPdfDoc(APP.files[0]);
+              const out = await PDFLib.PDFDocument.create();
+              const pages = await out.copyPages(p, p.getPageIndices());
+              pages.forEach(pg => out.addPage(pg));
+              provideDownload(await out.save({ useObjectStreams: true }), `${type}_result.pdf`);
+          }'''
+          text = replace_function(text, 'processEdit', 'processProtect', edit)
+
+          path.write_text(text, encoding='utf-8')
+
+      - name: Syntax check application
+        run: node --check assets/js/app.js
+
+      - name: Commit migration
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/js/app.js
+          git diff --cached --quiet && exit 0
+          git commit -m 'chore: apply PDF runtime migration'
+          git push
