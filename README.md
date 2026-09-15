@@ -2,6 +2,8 @@
 
 WPDF is a browser-based PDF tools application focused on client-side file processing.
 
+**Project owner / author:** Imad Limrani (عماد الدين لمراني)
+
 ## Current application
 
 The application is implemented in `index.html` with runtime logic in `assets/js/app.js` and modular PDF operations under `assets/js/pdf/`.
