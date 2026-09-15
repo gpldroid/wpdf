@@ -6,17 +6,23 @@ Database name: `wpdf-production`
 
 Database ID: `09339c53-6f74-4d35-b9f4-04e7cfd19246`
 
-The production D1 binding is configured in `wrangler.toml` as `DB`. fileciteturn209file0
+The production D1 binding is configured in `wrangler.toml` as `DB`.
 
-## 2. Initialize the schema
+## 2. Initialize or migrate the schema
 
-From the repository root, run:
+For a fresh database, run:
 
 ```bash
 npx wrangler d1 execute wpdf-production --remote --file=./schema.sql
 ```
 
-The schema creates the application settings and visit analytics tables and seeds the owner as `عماد الدين لمراني`. fileciteturn210file0
+If the original schema is already installed, run the incremental tool-usage migration:
+
+```bash
+npx wrangler d1 execute wpdf-production --remote --file=./migrations/001_tool_usage.sql
+```
+
+The schema stores application settings, privacy-friendly visit analytics, and tool-usage counts. PDF document contents are never stored in D1.
 
 ## 3. Deploy to Cloudflare Pages
 
@@ -50,6 +56,12 @@ The public editor is available at `/pdf-editor.html` and supports:
 - local save/download using pdf-lib
 
 Files remain in the browser during editing; the editor does not upload document contents to D1.
+
+## 7. Analytics and PWA
+
+The repository now includes a privacy-friendly analytics module at `assets/js/analytics.js`, a tool-usage API at `/api/tool-usage`, and a PWA shell cache update in `sw.js`.
+
+The repository quality workflow validates JavaScript syntax, required production files, and the runtime integration test.
 
 ## Important
 
