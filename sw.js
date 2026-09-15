@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wpdf-shell-v4';
+const CACHE_NAME = 'wpdf-shell-v5';
 const BASE = '/wpdf/';
 const APP_SHELL = [
   BASE,
