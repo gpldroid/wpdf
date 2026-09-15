@@ -117,3 +117,5 @@ jobs:
           test -f sitemap.xml
           test -f tests/pdf-modules.html
           test -f assets/js/pdf/runtime-migration.js
+
+# Runtime migration is removed after the generated commit is validated.
